@@ -1,0 +1,112 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Script/Game.gd" type="Script" id=1]
+[ext_resource path="res://Art/tiktik_tiles.png" type="Texture" id=2]
+[ext_resource path="res://Script/TileMap.gd" type="Script" id=3]
+[ext_resource path="res://Script/cursor.gd" type="Script" id=4]
+[ext_resource path="res://Script/Label_Tik.gd" type="Script" id=5]
+[ext_resource path="res://Art/SYMB_REPLAY.png" type="Texture" id=6]
+
+[sub_resource type="TileSet" id=1]
+0/name = "tiktik_tiles.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 48, 48 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [  ]
+0/z_index = 0
+1/name = "tiktik_tiles.png 1"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 48, 0, 48, 48 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shapes = [  ]
+1/z_index = 0
+2/name = "tiktik_tiles.png 2"
+2/texture = ExtResource( 2 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 96, 0, 48, 48 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shapes = [  ]
+2/z_index = 0
+3/name = "tiktik_tiles.png 3"
+3/texture = ExtResource( 2 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 144, 0, 48, 48 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shapes = [  ]
+3/z_index = 0
+
+[sub_resource type="StreamTexture" id=2]
+load_path = "res://.import/tiktik_cursors.png-d80af7c237769878bdad6f4301d4858d.stex"
+
+[node name="Game" type="Node"]
+script = ExtResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2( 48, 48 )
+tile_set = SubResource( 1 )
+cell_size = Vector2( 48, 48 )
+format = 1
+tile_data = PoolIntArray( 0, 1073741824, 0 )
+script = ExtResource( 3 )
+
+[node name="cursor" type="Sprite" parent="."]
+position = Vector2( 72, 72 )
+texture = SubResource( 2 )
+hframes = 4
+frame = 1
+script = ExtResource( 4 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_right = 240.0
+margin_bottom = 48.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+margin_left = 101.0
+margin_top = 17.0
+margin_right = 138.0
+margin_bottom = 31.0
+custom_constants/separation = 3
+
+[node name="Label" type="Label" parent="CenterContainer/HBoxContainer"]
+margin_right = 26.0
+margin_bottom = 14.0
+text = "Tik :"
+
+[node name="Label_Tik" type="Label" parent="CenterContainer/HBoxContainer"]
+margin_left = 29.0
+margin_right = 37.0
+margin_bottom = 14.0
+text = "0"
+script = ExtResource( 5 )
+
+[node name="CenterContainer2" type="CenterContainer" parent="."]
+margin_top = 192.0
+margin_right = 240.0
+margin_bottom = 240.0
+
+[node name="TextureButton" type="TextureButton" parent="CenterContainer2"]
+margin_left = 96.0
+margin_right = 144.0
+margin_bottom = 48.0
+texture_normal = ExtResource( 6 )
+[connection signal="addTik" from="TileMap" to="CenterContainer/HBoxContainer/Label_Tik" method="_on_TileMap_addTik"]
+[connection signal="cursor_color" from="TileMap" to="cursor" method="_on_TileMap_cursor_color"]
+[connection signal="cursor_moveDown" from="TileMap" to="cursor" method="_on_TileMap_cursor_moveDown"]
+[connection signal="cursor_moveLeft" from="TileMap" to="cursor" method="_on_TileMap_cursor_moveLeft"]
+[connection signal="cursor_moveRight" from="TileMap" to="cursor" method="_on_TileMap_cursor_moveRight"]
+[connection signal="cursor_moveUp" from="TileMap" to="cursor" method="_on_TileMap_cursor_moveUp"]
+[connection signal="button_down" from="CenterContainer2/TextureButton" to="." method="_on_TextureButton_button_down"]
